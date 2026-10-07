@@ -1,28 +1,22 @@
 pipeline {
 
-    agent {
-        label 'linux'
-    }
+    agent { label 'linux' }
 
     stages {
 
         stage('Checkout') {
             steps {
-                echo 'Code fetched from GitHub'
+                git 'https://github.com/samarasimha444/jenkins.git'
             }
         }
 
-        stage('Display HTML Content') {
+        stage('Deploy') {
             steps {
-                sh 'cat index.html'
+                sh '''
+                sudo cp index.html /usr/share/nginx/html/index.html
+                '''
             }
         }
 
-    }
-
-    post {
-        success {
-            echo 'Build Successful'
-        }
     }
 }
